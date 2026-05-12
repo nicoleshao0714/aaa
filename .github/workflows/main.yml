@@ -21,12 +21,11 @@ jobs:
         msystem: MINGW64
         update: true
         install: mingw-w64-x86_64-gcc make
-
-        - name: Build with MSYS2
+    
+    - name: Build with MSYS2
       run: |
         cd ChineseStrokeIME_Ver2_SourceCode
         make
-
     - name: Upload EXE
       uses: actions/upload-artifact@v4
       with:
