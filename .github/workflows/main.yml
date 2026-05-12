@@ -1,4 +1,3 @@
-yaml
 name: Build ChineseStrokeIME
 
 on:
@@ -9,22 +8,28 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install MinGW
-      run: |
-        choco install mingw -y
-        echo "C:\ProgramData\chocolatey\lib\mingw\tools\mingw64\bin" >> $env:GITHUB_PATH
+    - name: Setup MSYS2
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+        install: mingw-w64-x86_64-gcc make
 
-    - name: Build
+    - name: Build with MSYS2
       run: |
-        mingw32-make clean
-        mingw32-make
+        cd ChineseStrokeIME_Ver2_SourceCode
+        make clean
+        make
 
     - name: Upload EXE
       uses: actions/upload-artifact@v4
       with:
         name: ChineseStrokeIME
-        path: ChineseStrokeIME.exe
+        path: ChineseStrokeIME_Ver2_SourceCode/ChineseStrokeIME.exe
