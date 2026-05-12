@@ -22,10 +22,9 @@ jobs:
         update: true
         install: mingw-w64-x86_64-gcc make
 
-    - name: Build with MSYS2
+        - name: Build with MSYS2
       run: |
         cd ChineseStrokeIME_Ver2_SourceCode
-        make clean
         make
 
     - name: Upload EXE
